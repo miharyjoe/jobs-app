@@ -18,6 +18,7 @@ import {
 import { COLORS, icons, SIZES } from "../../constants";
 import useFetch from "../../hook/useFetch";
 import styles from "../../components/home/welcome/welcome.style";
+import { View } from "react-native-web";
 
 const jobDetails = () => {
   const params = useSearchParams();
@@ -38,7 +39,7 @@ const jobDetails = () => {
             <ScreenHeaderBtn
               iconUrl={icons.left}
               dimension="60%"
-              handlePress={() => router.back}
+              handlePress={() => router.back()}
             />
           ),
           headerRight: () => (
@@ -53,7 +54,25 @@ const jobDetails = () => {
           refreshControl={
             <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
           }
-        ></ScrollView>
+        >
+          {isLoading ? (
+            <ActivityIndicator size="large" color={COLORS.primary} />
+          ) : error ? (
+            <Text>Something went wrong</Text>
+          ) : data.length === 0 ? (
+            <Text>No data</Text>
+          ) : (
+            <View style={{ padding: SIZES.medium, paddingBottom: 100 }}>
+              <Company
+                companyLogo={data[0].employer_logo}
+                jobTitle={data[0].job_title}
+                companyName={data[0].employer_name}
+                location={data[0].job_country}
+              />
+              <JobTabs />
+            </View>
+          )}
+        </ScrollView>
       </>
     </SafeAreaView>
   );
