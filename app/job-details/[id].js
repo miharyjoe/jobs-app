@@ -5,6 +5,7 @@ import {
   ActivityIndicator,
   ScrollView,
   RefreshControl,
+  View,
 } from "react-native";
 import { Stack, useRouter, useSearchParams } from "expo-router";
 import {
@@ -17,10 +18,8 @@ import {
 } from "../../components";
 import { COLORS, icons, SIZES } from "../../constants";
 import useFetch from "../../hook/useFetch";
-import styles from "../../components/home/welcome/welcome.style";
-import { View } from "react-native-web";
 
-const jobDetails = () => {
+const JobDetails = () => {
   const params = useSearchParams();
   const router = useRouter();
   const { data, isLoading, error, reFetch } = useFetch("job-details", {
@@ -78,4 +77,4 @@ const jobDetails = () => {
   );
 };
 
-export default jobDetails;
+export default JobDetails;
