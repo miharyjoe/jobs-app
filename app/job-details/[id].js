@@ -31,6 +31,19 @@ const JobDetails = () => {
   const [activeTab, setActiveTab] = useState(tabs[0]);
 
   const onRefresh = () => {};
+  const displayTabContent = () => {
+    switch (activeTab) {
+      case "Qualification":
+        return (
+          <Specifics
+            title="Qualification"
+            points={data[0].job_highlights?.qualifications ?? ["N/A"]}
+          />
+        );
+      case "About":
+      case "Responsability":
+    }
+  };
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.lightWhite }}>
       <Stack.Screen
