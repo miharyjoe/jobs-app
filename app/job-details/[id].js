@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
+
 import {
   Text,
   SafeAreaView,
@@ -19,7 +20,9 @@ import {
 import { COLORS, icons, SIZES } from "../../constants";
 import useFetch from "../../hook/useFetch";
 
-const tabs = ["About", "Qualification", "Responsability"];
+
+const tabs = ["About", "Qualification", "Responsibilities"];
+
 
 const JobDetails = () => {
   const params = useSearchParams();
@@ -30,7 +33,12 @@ const JobDetails = () => {
   const [refreshing, setRefreshing] = useState(false);
   const [activeTab, setActiveTab] = useState(tabs[0]);
 
-  const onRefresh = () => {};
+  const onRefresh = useCallback(() => {
+    setRefreshing(true);
+    reFetch();
+    setRefreshing(false);
+  }, []);
+
   const displayTabContent = () => {
     switch (activeTab) {
       case "Qualification":
@@ -41,7 +49,18 @@ const JobDetails = () => {
           />
         );
       case "About":
-      case "Responsability":
+
+        return (
+          <JobAbout info={data[0].job_description ?? "No data provided"} />
+        );
+      case "Responsibilities":
+        return (
+          <Specifics
+            title="Responsibilities"
+            points={data[0].job_highlights?.Responsibilities ?? ["N/A"]}
+          />
+        );
+
     }
   };
   return (
@@ -90,9 +109,17 @@ const JobDetails = () => {
                 activeTab={activeTab}
                 setActiveTab={setActiveTab}
               />
+              {displayTabContent()}
             </View>
           )}
         </ScrollView>
+        <JobFooter
+          url={
+            data[0]?.job_google_link ??
+            "https://careers.google.com/jobs/results"
+          }
+        />
+
       </>
     </SafeAreaView>
   );
