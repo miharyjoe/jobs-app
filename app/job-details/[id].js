@@ -1,4 +1,5 @@
 import React, { useCallback, useState } from "react";
+
 import {
   Text,
   SafeAreaView,
@@ -19,7 +20,9 @@ import {
 import { COLORS, icons, SIZES } from "../../constants";
 import useFetch from "../../hook/useFetch";
 
+
 const tabs = ["About", "Qualification", "Responsibilities"];
+
 
 const JobDetails = () => {
   const params = useSearchParams();
@@ -35,6 +38,7 @@ const JobDetails = () => {
     reFetch();
     setRefreshing(false);
   }, []);
+
   const displayTabContent = () => {
     switch (activeTab) {
       case "Qualification":
@@ -45,6 +49,7 @@ const JobDetails = () => {
           />
         );
       case "About":
+
         return (
           <JobAbout info={data[0].job_description ?? "No data provided"} />
         );
@@ -55,6 +60,7 @@ const JobDetails = () => {
             points={data[0].job_highlights?.Responsibilities ?? ["N/A"]}
           />
         );
+
     }
   };
   return (
@@ -113,6 +119,7 @@ const JobDetails = () => {
             "https://careers.google.com/jobs/results"
           }
         />
+
       </>
     </SafeAreaView>
   );
